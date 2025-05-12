@@ -1,55 +1,56 @@
-# ColorObjectDetectorApp 🎨📸
+# 🎨📸 ObjectTrackingApp-ByColor
 
-A Python-based color detection system for identifying colored objects via webcam.
+A Python-based object detection system for identifying colored or specific objects via webcam.
 
 ---
 
 ## 👋 Welcome
 
-Welcome to **ColorObjectDetectorApp**!  
-This Python project lets you detect objects of specific colors (**pink**, **light blue**, **yellow**, **green**, **white**, **orange**) using your webcam. Built with **OpenCV**, it’s a simple and fun way to:
+Welcome to **ObjectTrackingApp-ByColor**!  
+This Python project lets you detect objects using:
 
-- Detect colored objects in real-time  
-- Switch between colors with a key press  
-- Visualize detection with bounding boxes and masks  
+- **Color detection** (pink, light blue, yellow, green, white, orange)  
+- **Specific object classes** (e.g., bottle, person) via **YOLOv3 or YOLOv3-Tiny**
 
-Point your webcam at a colored object and start detecting! 🚀
+Built with **OpenCV** and **YOLO**, this app provides:
 
----
-
-## 🌟 What It Does
-
-### 🎨 Detect Colors
-
-Identifies objects in the following colors:
-
-- 💗 **Pink** – Press `p`  
-- 💙 **Light Blue** – Press `b`  
-- 💛 **Yellow** – Press `y`  
-- 💚 **Green** – Press `g`  
-- 🤍 **White** – Press `w`  
-- 🧡 **Orange** – Press `o`  
-
-### 📺 Show Feedback
-
-- Bounding box around the detected object with a color label (e.g., `"Yellow Object"`)  
-- Current color selection displayed on-screen (e.g., `"Color: Yellow"`)  
-- Instructions for selecting colors  
-- Optional mask window for visualizing HSV detection  
+- Real-time detection  
+- Mode switching (color ↔ YOLO)  
+- Bounding boxes and optional HSV masks  
 
 ---
 
-## 🔧 Customizable
+## 🌟 Features
 
-All color HSV ranges are defined in `configs.py`.  
-Easily modify or add colors to detect.
+### 🎨 Color Detection
+
+Identify objects of the following colors in real-time:
+
+| Key | Color        | Emoji       |
+|-----|--------------|-------------|
+| `p` | Pink         | 💗          |
+| `b` | Light Blue   | 💙          |
+| `y` | Yellow       | 💛          |
+| `g` | Green        | 💚          |
+| `w` | White        | 🤍          |
+| `o` | Orange       | 🧡          |
+
+### 🤖 YOLO Object Detection
+
+Press `d` to switch to **DNN (YOLO)** mode to detect specific object classes like `bottle`, `person`, etc.
+
+### 💡 Real-time Feedback
+
+- Bounding box with labels (e.g., `"Pink Object"` or `"Bottle: 0.95"`)  
+- Current mode and selection display  
+- On-screen instructions for key controls  
+- Optional HSV mask window (can be toggled)
 
 ---
 
-## 📂 Project Layout
+## 📂 Project Structure
 
 ```
-
 ColorObjectDetectorApp/
 ├── env/                    # 🌐 Virtual environment
 ├── tracking/               # 🛠️ Detection scripts
@@ -62,8 +63,7 @@ ColorObjectDetectorApp/
 ├── main.py                 # 🚀 Main application
 ├── requirements.txt        # 📋 Dependencies
 ├── ProjectStructure.txt    # 📄 Project structure documentation
-
-````
+```
 
 ---
 
@@ -73,11 +73,12 @@ ColorObjectDetectorApp/
 
 - Python 3.8+  
 - Webcam  
+- YOLOv3 model files (downloaded manually)
 
 ### 🧱 Required Packages
 
 - `opencv-python`  
-- `numpy`
+- `numpy`  
 
 ---
 
@@ -86,9 +87,9 @@ ColorObjectDetectorApp/
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/ColorObjectDetectorApp.git
-cd ColorObjectDetectorApp
-````
+git clone https://github.com/Jitenrai21/ObjectTrackingApp-ByColor-.git
+cd ObjectTrackingApp-ByColor
+```
 
 ### 2. Set Up Virtual Environment
 
@@ -98,14 +99,12 @@ python -m venv env
 
 **Activate Virtual Environment**
 
-* **Windows:**
-
+*Windows:*
 ```bash
 .\env\Scripts\activate
 ```
 
-* **macOS/Linux:**
-
+*macOS/Linux:*
 ```bash
 source env/bin/activate
 ```
@@ -116,7 +115,21 @@ source env/bin/activate
 pip install -r requirements.txt
 ```
 
-### 4. Run the Application
+### 4. Download YOLO Model Files
+
+Download the following files and place them in the `models/` directory:
+
+- [yolov3.weights](https://pjreddie.com/media/files/yolov3.weights)  
+- [yolov3.cfg](https://raw.githubusercontent.com/pjreddie/darknet/master/cfg/yolov3.cfg)  
+- [yolov3-tiny.weights](https://pjreddie.com/media/files/yolov3-tiny.weights)  
+- [yolov3-tiny.cfg](https://raw.githubusercontent.com/pjreddie/darknet/master/cfg/yolov3-tiny.cfg)  
+- [coco.names](https://raw.githubusercontent.com/pjreddie/darknet/master/data/coco.names)
+
+> ⚠️ **Note:** Ensure the file names match exactly as referenced in `configs.py` (e.g., `models/coco.names`, not `coco.names.txt`)
+
+---
+
+## 🚀 Running the Application
 
 ```bash
 python main.py
@@ -126,94 +139,114 @@ python main.py
 
 ## 🎮 How to Use
 
-* Point your webcam at a colored object (e.g., pink cloth, blue pen)
-* Press the corresponding key to select a color
-* Press `q` to quit the application
+- Point your webcam at an object (e.g., a pink cloth or a bottle)  
+- Use the following keys to control the app:
 
-### 🎨 Supported Colors
-
-| Key | Color         | Description                |
-| --- | ------------- | -------------------------- |
-| `r` | 💗 Pink       | Detects pink objects       |
-| `b` | 💙 Light Blue | Detects light blue objects |
-| `y` | 💛 Yellow     | Detects yellow objects     |
-| `g` | 💚 Green      | Detects green objects      |
-| `w` | 🤍 White      | Detects white objects      |
-| `o` | 🧡 Orange     | Detects orange objects     |
-
-### 📊 On-Screen Feedback
-
-* **Bounding Box:** Label with object name (e.g., `"Pink Object"`)
-* **Color Label:** Shows current color selection
-* **Instructions:** Color selection keys listed
-* **Mask Window:** (Optional) Displays HSV detection mask if enabled in config
+| Key | Action                         |
+|-----|--------------------------------|
+| `p` | Detect Pink objects            |
+| `b` | Detect Light Blue objects      |
+| `y` | Detect Yellow objects          |
+| `g` | Detect Green objects           |
+| `w` | Detect White objects           |
+| `o` | Detect Orange objects          |
+| `c` | Switch to Color Detection Mode |
+| `d` | Switch to YOLO DNN Mode        |
+| `q` | Quit the application           |
 
 ---
 
-## 🧩 Customize It
+## 🧩 Customization
 
-* **Add New Colors:**
-  Modify `COLOR_RANGES` in `config.py` and update `color_keys` in `main.py`
+### Add New Colors
 
-* **Adjust Detection Area:**
-  Update `MIN_CONTOUR_AREA` in `config.py` to detect smaller/larger objects
+- Modify `COLOR_RANGES` in `configs.py`  
+- Update key bindings in `main.py`
 
-* **Toggle Mask Display:**
-  Set `SHOW_MASK = False` in `config.py` to hide the mask
+### Adjust YOLO Parameters
 
-* **Fine-Tune HSV Ranges:**
-  Tweak HSV values in `config.py` based on lighting/environment
+- Change `YOLO_CONFIDENCE` and `YOLO_THRESHOLD` in `configs.py`
+
+### Add Object Classes
+
+- Edit `coco.names` or replace with a custom YOLO-trained model
+
+### Toggle HSV Mask Display
+
+- Set `SHOW_MASK = False` in `configs.py`
+
+### Use YOLOv3-Tiny for Faster Detection
+
+- Update `YOLO_WEIGHTS` and `YOLO_CFG` in `configs.py` with:
+  - `yolov3-tiny.weights`
+  - `yolov3-tiny.cfg`
 
 ---
 
 ## 🐞 Troubleshooting
 
-* **Webcam Not Working?**
-  Ensure it's connected and functioning.
-  Try changing `CAMERA_INDEX` in `config.py` (e.g., from `0` to `1`)
+### Webcam Not Working?
 
-* **Dependencies Issue?**
-  Verify you're inside the virtual environment when running `pip install`
+- Ensure it’s connected and functional  
+- Change `CAMERA_INDEX` in `configs.py` (try 0, 1, 2...)
 
-* **Colors Not Detected?**
+### YOLO Not Detecting?
 
-  * Use bright, solid-colored objects
-  * Adjust HSV ranges in `config.py`
-  * Improve lighting conditions
+- Ensure model files exist in the `models/` directory  
+- Check names and paths in `configs.py`  
+- Lower `YOLO_CONFIDENCE` to e.g., `0.3`  
+- Try using `yolov3-tiny` instead  
 
-* **Text Overlapping?**
-  Modify text position or font size in `main.py` (e.g., change `(10, 60)` to `(10, 70)`)
+### Colors Not Detected?
+
+- Use bright, solid-colored objects  
+- Adjust HSV ranges in `configs.py`  
+- Improve lighting
+
+### Text Overlap?
+
+- Change text position or font size in `main.py` (e.g., update coordinates like `(10, 90)` → `(10, 100)`)
+
+### Large Files in Git?
+
+If you accidentally committed `models/`:
+
+```bash
+git rm -r --cached models/
+git commit -m "Remove models/ from Git tracking"
+git push origin main
+```
 
 ---
 
-## 🤝 Contribute
+## 🤝 Contributing
 
-Want to improve this app? Here’s how:
+Want to improve this app? Here's how:
 
-```bash
-# Fork the repo
-# Create a new branch
-git checkout -b feature/your-feature-name
-
-# Commit your changes
-git commit -m "Add new feature"
-
-# Push to GitHub
-git push origin feature/your-feature-name
-
-# Open a Pull Request 🚀
-```
+1. **Fork the repository**
+2. **Create a new branch**  
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+3. **Commit your changes**  
+   ```bash
+   git commit -m "Add new feature"
+   ```
+4. **Push to GitHub**  
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+5. **Open a Pull Request** 🚀
 
 ---
 
 ## 🙏 Acknowledgments
 
-* **OpenCV** – For real-time computer vision
-* **You** – For checking out this project! ❤️
+- [OpenCV](https://opencv.org/) – Real-time computer vision and DNN support  
+- [YOLO (You Only Look Once)](https://pjreddie.com/darknet/yolo/) – Object detection framework  
+- **You** – For checking out this project ❤️
 
 ---
 
-Built by **Jiten Rai**
-**Happy detecting! 🎉**
-
-```
+**Built with passion by Jiten Rai**  
+**Happy Detecting! 🎉**
